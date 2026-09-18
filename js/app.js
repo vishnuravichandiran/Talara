@@ -1492,13 +1492,20 @@
     const loggedInEls = document.querySelectorAll('.auth-logged-in');
     
     if (STATE.isAuthenticated) {
-      if (dom.loggedOutNav) dom.loggedOutNav.style.display = 'none';
-      if (dom.loggedInNav) dom.loggedInNav.style.display = 'flex';
+      if (dom.loggedOutNav) {
+        dom.loggedOutNav.classList.remove('lg:flex');
+        dom.loggedOutNav.classList.add('hidden');
+        dom.loggedOutNav.style.display = '';
+      }
+      if (dom.loggedInNav) {
+        dom.loggedInNav.classList.remove('hidden');
+        dom.loggedInNav.classList.add('hidden', 'lg:flex');
+        dom.loggedInNav.style.display = '';
+      }
       
       loggedOutEls.forEach(el => el.classList.add('hidden'));
       loggedInEls.forEach(el => el.classList.remove('hidden'));
       loggedInEls.forEach(el => {
-        // if it's a flex container, it was hidden via 'hidden' class, when removed it will use flex (Tailwind)
         if (el.tagName === 'DIV') {
             el.style.display = 'flex';
         }
@@ -1507,19 +1514,17 @@
       // Update counts
       updateCartUI();
       updateWishlistUI();
-      
-      // Show shopping view
-      showToast('Welcome, ' + STATE.userProfile.name, 'success');
-      document.getElementById('hero-section').style.display = 'none';
-      document.getElementById('universe-section').style.display = 'none';
-      document.getElementById('anatomy-section').style.display = 'none';
-      document.getElementById('process-section').style.display = 'none';
-      document.getElementById('science-section').style.display = 'none';
-      document.getElementById('sustainability-section').style.display = 'none';
-      document.getElementById('story-section').style.display = 'none';
     } else {
-      if (dom.loggedOutNav) dom.loggedOutNav.style.display = 'flex';
-      if (dom.loggedInNav) dom.loggedInNav.style.display = 'none';
+      if (dom.loggedOutNav) {
+        dom.loggedOutNav.classList.remove('hidden');
+        dom.loggedOutNav.classList.add('hidden', 'lg:flex');
+        dom.loggedOutNav.style.display = '';
+      }
+      if (dom.loggedInNav) {
+        dom.loggedInNav.classList.remove('lg:flex');
+        dom.loggedInNav.classList.add('hidden');
+        dom.loggedInNav.style.display = '';
+      }
       
       loggedOutEls.forEach(el => el.classList.remove('hidden'));
       loggedInEls.forEach(el => el.classList.add('hidden'));
@@ -2102,6 +2107,13 @@
 
           closeUnifiedAuthModal();
           updateAuthStateUI();
+          showToast('Welcome back, ' + user.name, 'success');
+          
+          // Smooth scroll to catalog
+          const catalogSection = document.getElementById('catalog-section');
+          if (catalogSection) {
+            catalogSection.scrollIntoView({ behavior: 'smooth' });
+          }
         } else {
           showToast('Invalid email or password.', 'error');
         }
