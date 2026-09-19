@@ -1753,9 +1753,63 @@
     }
   }
 
+  function initSubscriptionCalculator() {
+    const usageSlider = document.getElementById('calc-usage-slider');
+    const peopleSlider = document.getElementById('calc-people-slider');
+    const usageVal = document.getElementById('calc-usage-val');
+    const peopleVal = document.getElementById('calc-people-val');
+    const resultWeight = document.getElementById('calc-result-weight');
+    const resultJars = document.getElementById('calc-result-jars');
+    const subscribeBtn = document.getElementById('subscribe-btn');
+
+    if (!usageSlider || !peopleSlider) return;
+
+    function calculateSubscription() {
+      const spoons = parseInt(usageSlider.value, 10);
+      const people = parseInt(peopleSlider.value, 10);
+      
+      usageVal.textContent = spoons === 1 ? '1 Spoon' : spoons + ' Spoons';
+      peopleVal.textContent = people === 1 ? '1 Person' : people + ' People';
+
+      // Math: Spoons * People * 5g per spoon * 30 days
+      const totalGrams = spoons * people * 5 * 30;
+      
+      let formattedWeight = totalGrams + 'g';
+      if (totalGrams >= 1000) {
+        formattedWeight = (totalGrams / 1000).toFixed(1) + 'kg';
+      }
+      
+      resultWeight.textContent = formattedWeight;
+
+      // Assuming standard jar is 300g
+      const jarsRequired = Math.ceil(totalGrams / 300);
+      resultJars.textContent = 'Requires: ' + jarsRequired + 'x 300g Jars / month';
+    }
+
+    usageSlider.addEventListener('input', calculateSubscription);
+    peopleSlider.addEventListener('input', calculateSubscription);
+    
+    if (subscribeBtn) {
+      subscribeBtn.addEventListener('click', () => {
+        showToast('Subscription plan added to your cart!', 'success');
+        // Actually add it to the cart logic
+        const subProduct = PRODUCTS_DATA.find(p => p.id === 'talara-sugar-01');
+        if (subProduct) {
+          const jars = Math.ceil((parseInt(usageSlider.value, 10) * parseInt(peopleSlider.value, 10) * 5 * 30) / 300);
+          addToCart(subProduct.id, jars);
+          openCartDrawer();
+        }
+      });
+    }
+
+    // Initial calculation
+    calculateSubscription();
+  }
+
   // --- Event Listeners Setup ---
   function initEventListeners() {
     initNavbarScroll();
+    initSubscriptionCalculator();
 
     // Mobile Menu Toggle
     if (dom.navMobileToggle && dom.navMobileMenu) {

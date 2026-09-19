@@ -505,6 +505,71 @@
   </section>
 
   <!-- ==========================================================================
+       SECTION: SMART SUBSCRIPTION CALCULATOR
+       ========================================================================== -->
+  <section id="subscription-section" class="py-24 border-t border-white/5 bg-[#0a110d] relative">
+    <div class="site-container">
+      
+      <div class="max-w-2xl mb-12">
+        <span class="badge-tag badge-emerald mb-3 font-mono">Auto-Replenish</span>
+        <h2 class="font-display text-3xl sm:text-5xl font-bold text-white mb-4">
+          Never Run Out of Nature's Nectar.
+        </h2>
+        <p class="text-sm sm:text-base text-zinc-400 leading-relaxed">
+          Calculate your exact monthly requirement based on your household's daily consumption. Subscribe to receive freshly harvested batches direct from our cold-chain reserves at a 15% recurring privilege discount.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <!-- Calculator Controls -->
+        <div class="glass-panel p-6 sm:p-8 rounded-2xl">
+          <h3 class="font-display text-xl font-bold text-white mb-6">Usage Calculator</h3>
+          
+          <div class="space-y-8">
+            <!-- Slider 1 -->
+            <div>
+              <div class="flex justify-between text-sm text-zinc-300 mb-3 font-mono">
+                <span>Daily Consumption (Teaspoons per person)</span>
+                <span id="calc-usage-val" class="text-amber-400 font-bold">2 Spoons</span>
+              </div>
+              <input type="range" id="calc-usage-slider" min="1" max="10" value="2" class="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer">
+            </div>
+
+            <!-- Slider 2 -->
+            <div>
+              <div class="flex justify-between text-sm text-zinc-300 mb-3 font-mono">
+                <span>Household Size (People consuming)</span>
+                <span id="calc-people-val" class="text-amber-400 font-bold">2 People</span>
+              </div>
+              <input type="range" id="calc-people-slider" min="1" max="10" value="2" class="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer">
+            </div>
+            
+            <div class="p-4 rounded-xl bg-amber-950/20 border border-amber-500/20">
+              <p class="text-xs text-zinc-400 leading-relaxed">
+                *One teaspoon of unrefined Palm Sweetener is approximately 5 grams. Calculations are based on a 30-day monthly cycle.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Calculator Result -->
+        <div class="glass-panel p-6 sm:p-8 rounded-2xl border border-amber-500/30 flex flex-col justify-center text-center relative overflow-hidden">
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-500 to-emerald-500"></div>
+          
+          <span class="text-xs font-mono text-zinc-400 uppercase tracking-widest mb-2">Your Recommended Monthly Plan</span>
+          <div class="text-5xl font-display font-bold text-white mb-2" id="calc-result-weight">600g</div>
+          <p class="text-amber-400 font-mono text-sm mb-8" id="calc-result-jars">Requires: 2x 300g Jars / month</p>
+          
+          <button id="subscribe-btn" class="btn-primary w-full max-w-sm mx-auto">
+            <span>Subscribe & Save 15%</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
        SECTION 5: PROCESS JOURNEY ("FROM GROVE TO GLASS")
        ========================================================================== -->
   <section id="process-section" class="py-24 border-t border-white/5 bg-[#090e0b] relative">
