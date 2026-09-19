@@ -174,51 +174,7 @@
     }, { passive: true });
   }
 
-  // --- Theme Management (Light / Dark Luxury System) ---
-  function initTheme() {
-    const savedTheme = localStorage.getItem('talara_theme');
-    const initialTheme = savedTheme || 'light';
-    applyTheme(initialTheme);
-
-    if (dom.themeToggleBtn) {
-      dom.themeToggleBtn.addEventListener('click', () => {
-        const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        applyTheme(newTheme);
-        showToast(newTheme === 'light' ? 'Light Theme Activated' : 'Dark Luxury Theme Activated', 'info');
-      });
-    }
-
-    if (window.matchMedia) {
-      window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
-        if (!localStorage.getItem('talara_theme')) {
-          applyTheme(e.matches ? 'light' : 'dark');
-        }
-      });
-    }
-  }
-
-  function applyTheme(theme) {
-    STATE.theme = theme;
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('talara_theme', theme);
-
-    if (dom.themeToggleBtn) {
-      const sunIcon = dom.themeToggleBtn.querySelector('.sun-icon');
-      const moonIcon = dom.themeToggleBtn.querySelector('.moon-icon');
-      if (theme === 'light') {
-        if (sunIcon) sunIcon.classList.add('hidden');
-        if (moonIcon) moonIcon.classList.remove('hidden');
-        dom.themeToggleBtn.setAttribute('title', 'Switch to Dark Theme');
-        dom.themeToggleBtn.setAttribute('aria-label', 'Switch to Dark Theme');
-      } else {
-        if (sunIcon) sunIcon.classList.remove('hidden');
-        if (moonIcon) moonIcon.classList.add('hidden');
-        dom.themeToggleBtn.setAttribute('title', 'Switch to Light Theme');
-        dom.themeToggleBtn.setAttribute('aria-label', 'Switch to Light Theme');
-      }
-    }
-  }
+  // Theme Management removed per user request (Default to dark)
 
 
 
@@ -2196,7 +2152,6 @@
     }
     
     initDOM();
-    initTheme();
     initEventListeners();
     renderProductsGrid();
     renderAnatomySection();
